@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskMaster - ניהול משימות</title>
+    <link rel="stylesheet" href="client/style.css">
+
+</head>
+<body>
+    <!-- Login Page Template -->
+    <template id="login-template">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h1>log in to <br> TaskMaster </h1>
+                <form id="login-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="login-user-name">שם משתמש</label>
+                        <input type="text" id="login-user-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">סיסמה</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn-primary">התחברות</button>
+                </form>
+                <p class="auth-switch">
+                    אין לך חשבון? <a href="#" id="to-register">הירשם עכשיו</a>
+                </p>
+            </div>
+        </div>
+    </template>
+
+    <!-- Register Page Template -->
+    <template id="register-template">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h1>sign up to TaskMaster</h1>
+                <form id="register-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="register-name">שם מלא</label>
+                        <input type="text" id="register-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">אימייל</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">סיסמה</label>
+                        <input type="password" id="register-password" required>
+                    </div>
+                    <button type="submit" class="btn-primary">הרשמה</button>
+                </form>
+                <p class="auth-switch">
+                    כבר יש לך חשבון? <a href="#" id="to-login">התחבר כאן</a>
+                </p>
+            </div>
+        </div>
+    </template>
+
+    <!-- Main App Template -->
+    <template id="app-template">
+        <div class="app-container">
+            <header class="app-header">
+                <div class="header-content">
+                    <h1>TaskMaster</h1>
+                    <div class="user-info">
+                        <span id="user-name"></span>
+                        <button id="logout-btn" class="btn-secondary">התנתקות</button>
+                    </div>
+                </div>
+            </header>
+            
+            <main class="main-content">
+                <div class="tasks-container">
+                    <button id="toggle-task-form" class="btn-primary">הוספת משימה</button>
+                    <div id="task-form-container" class="hidden">
+                        <div class="add-task-section">
+                            <h2>משימה חדשה</h2>
+                            <form id="add-task-form">
+                                <img src="media/vintage.png" class="task-header-img" alt="תמונה עיצובית">
+                                <div class="form-group">
+                                    <input type="text" id="task-title" placeholder="כותרת המשימה" required>
+                                </div>
+                                <div class="form-group">
+                                    <textarea id="task-description" placeholder="תיאור המשימה"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="task-due-date">תאריך יעד</label>
+                                    <input type="date" id="task-due-date">
+                                </div>
+                                <div class="form-group">
+                                    <select id="task-priority">
+                                        <option value="low">נמוכה</option>
+                                        <option value="medium">בינונית</option>
+                                        <option value="high">גבוהה</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <button id="submit-task" class="btn-primary">צור משימה</button>
+                    </div>
+
+                    <div class="tasks-list-section">
+                        <h2>המשימות שלי</h2>
+                        <div class="tasks-filters">
+                            <input type="text" id="search-tasks" placeholder="חיפוש משימות">
+                            <select id="filter-priority">
+                                <option value="all">כל העדיפויות</option>
+                                <option value="high">גבוהה</option>
+                                <option value="medium">בינונית</option>
+                                <option value="low">נמוכה</option>
+                            </select>
+                        </div>
+                        <div id="tasks-list" class="tasks-list">
+                            <!-- Tasks will be inserted here dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </template>
+
+
+    <div id="root"></div>
+    <div id="loading-spinner" class="hidden">טוען...</div>
+    <div id="notification" class="hidden"></div>
+
+    <script src="communication/network.js"></script>
+    <script src="communication/FXMLHttpRequest.js"></script>
+    <script src="server/server.js"></script>
+    <script src="server/taskDB.js"></script>
+    <script src="server/userDB.js"></script>
+    <script src="client/app.js"></script>
+</body>
+</html>
