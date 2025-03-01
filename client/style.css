@@ -28,6 +28,7 @@ body {
     background-position: center;
     background-repeat: no-repeat; 
     background-blend-mode:  soft-light; 
+    /* filter: sepia(60%) hue-rotate(-20deg) brightness(1.1) contrast(1.2); */
 }
 
 .auth-container {
@@ -155,22 +156,6 @@ body {
     color: white;
 }
 
-/* Task Items */
-.task-item {
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: transform 0.2s;
-}
-
-.task-item:hover {
-    transform: translateX(-5px);
-}
-
 /* Utilities */
 .hidden {
     display: none;
@@ -229,27 +214,6 @@ body {
     margin-top: 10px;
 }
 
-.priority-badge {
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-weight: bold;
-}
-
-.priority-badge.high {
-    border: 2px solid red;
-    color: red;
-}
-
-.priority-badge.medium {
-    border: 2px solid green;
-    color: green;
-}
-
-.priority-badge.low {
-    border: 2px solid orange;
-    color: orange;
-}
-
 .btn {
     background: #007bff;
     color: white;
@@ -284,4 +248,165 @@ body {
     border: none;
     cursor: pointer;
     color: blue;
+}
+
+/* Task Component Styles - New Additions */
+
+/* Task header with title and checkbox */
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    direction: rtl;
+}
+
+.task-checkbox {
+    margin-left: 10px;
+}
+
+.task-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* Task description textarea */
+.task-description {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    margin: 10px 0;
+    resize: vertical;
+    direction: rtl;
+}
+
+/* Task footer with priority and category */
+.task-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    direction: rtl;
+}
+
+.priority-separator {
+    margin: 0 10px;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+/* Priority badge styles */
+.priority-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 5px;
+    direction: rtl;
+}
+
+.priority-badge.high {
+    border: 2px solid #dc4c3e;
+    color: #dc4c3e;
+    background:#f7ccbc;
+    
+}
+
+.priority-badge.medium {
+    border: 2px solid green;
+    background:#9fe5c6;
+    color: green;
+}
+
+.priority-badge.low {
+    border: 2px solid orange;
+    background:#fbffb0;
+    color: orange;
+}
+
+/* Select dropdown styles */
+.priority-select, .category-select {
+    padding: 5px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 5px;
+    direction: rtl;
+    width: 100%;
+}
+
+/* Task action buttons */
+.task-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.create-task {
+    background-color: var(--primary-color);
+    color: white;
+    flex-grow: 1;
+}
+
+.delete-task {
+    background-color: transparent;
+    color: var(--error-color);
+    border: 1px solid var(--error-color);
+    margin-right: 10px;
+    width: 30%;
+}
+
+.delete-task:hover {
+    background-color: var(--error-color);
+    color: white;
+}
+
+/* Task list styles */
+.task-list {
+    margin-top: 30px;
+}
+
+.task-item:hover {
+    transform: translateY(-3px);
+}
+
+.task-item-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.task-item-description {
+    color: #777;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.task-item-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.task-item-category {
+    background-color: #f0f0f0;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+/* Completed task styling */
+.task-item.completed .task-item-title {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.hidden {
+    display: none;
 }

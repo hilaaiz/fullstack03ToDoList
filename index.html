@@ -72,52 +72,53 @@
             </header>
             
             <main class="main-content">
-                <div class="tasks-container">
-                    <button id="toggle-task-form" class="btn-primary">הוספת משימה</button>
-                    <div id="task-form-container" class="hidden">
-                        <div class="add-task-section">
-                            <h2>משימה חדשה</h2>
-                            <form id="add-task-form">
-                                <img src="media/vintage.png" class="task-header-img" alt="תמונה עיצובית">
-                                <div class="form-group">
-                                    <input type="text" id="task-title" placeholder="כותרת המשימה" required>
-                                </div>
-                                <div class="form-group">
-                                    <textarea id="task-description" placeholder="תיאור המשימה"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="task-due-date">תאריך יעד</label>
-                                    <input type="date" id="task-due-date">
-                                </div>
-                                <div class="form-group">
-                                    <select id="task-priority">
-                                        <option value="low">נמוכה</option>
-                                        <option value="medium">בינונית</option>
-                                        <option value="high">גבוהה</option>
-                                    </select>
-                                </div>
-                            </form>
+                <!-- Task Creation Component -->
+                <div class="task-container">
+                    <div class="task-header">
+                        <input type="text" class="task-title" placeholder="משימה ראשונה להיום" dir="rtl">
+                        <div class="task-checkbox">
+                            <input type="checkbox" id="task-complete">
+                            <label for="task-complete"></label>
+                        </div>
+                    </div>
+                    
+                    <hr class="task-divider">
+                    
+                    <textarea class="task-description" placeholder="תיאור או הערות למשימה החשובה שלי" dir="rtl"></textarea>
+                    
+                    <div class="task-footer">
+                        <div class="task-priority">
+                            <select id="task-priority" class="priority-select">
+                                <option value="high">דחיפות גבוהה</option>
+                                <option value="medium">דחיפות בינונית</option>
+                                <option value="low">דחיפות נמוכה</option>
+                            </select>
+                            <div class="priority-badge high">דחופה</div>
                         </div>
                         
-                        <button id="submit-task" class="btn-primary">צור משימה</button>
-                    </div>
-
-                    <div class="tasks-list-section">
-                        <h2>המשימות שלי</h2>
-                        <div class="tasks-filters">
-                            <input type="text" id="search-tasks" placeholder="חיפוש משימות">
-                            <select id="filter-priority">
-                                <option value="all">כל העדיפויות</option>
-                                <option value="high">גבוהה</option>
-                                <option value="medium">בינונית</option>
-                                <option value="low">נמוכה</option>
+                        <div class="priority-separator">|</div>
+                        
+                        <div class="task-category">
+                            <select id="task-category" class="category-select">
+                                <option value="home">בית</option>
+                                <option value="work">עבודה</option>
+                                <option value="studies">לימודים</option>
+                                <option value="finances">פיננסים</option>
+                                <option value="other">אחר</option>
                             </select>
                         </div>
-                        <div id="tasks-list" class="tasks-list">
-                            <!-- Tasks will be inserted here dynamically -->
-                        </div>
+                    </div>                                                             
+                    <div class="task-actions">
+                        <button class="btn-primary create-task">צור משימה</button>
+                        <button class="btn-secondary delete-task hidden">מחק משימה</button>
                     </div>
                 </div>
+                
+                <!-- Task List -->
+                <div class="task-list">
+                    <!-- Task items will be added here dynamically -->
+                </div>
+                    
             </main>
         </div>
     </template>

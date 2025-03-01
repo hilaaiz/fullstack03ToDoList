@@ -1,232 +1,5 @@
-// // app.js
+// app.js
 
-// // // Configure initial app settings
-// // const AppConfig = {
-// //     apiEndpoints: {
-// //         auth: '/auth',
-// //         tasks: '/tasks'
-// //     },
-// //     defaultRoute: '#login',
-// //     networkConfig: {
-// //         dropRate: 0.1,
-// //         minDelay: 1000,
-// //         maxDelay: 3000
-// //     }
-// // };
-
-// // // Route handler configurations
-// // const RouteHandlers = {
-// //     '#login': {
-// //         requiresAuth: false,
-// //         template: 'login-template'
-// //     },
-// //     '#register': {
-// //         requiresAuth: false,
-// //         template: 'register-template'
-// //     },
-// //     '#app': {
-// //         requiresAuth: true,
-// //         template: 'app-template'
-// //     }
-// // };
-
-// class TaskMasterApp {
-//     constructor() {
-//         // Initialize core components
-//         this.initializeComponents();
-        
-//         // Initialize app state
-//         this.state = {
-//             currentUser: null,
-//             tasks: [],
-//             isLoading: false,
-//             filters: {
-//                 search: '',
-//                 priority: 'all'
-//             }
-//         };
-
-//         // Start the application
-//         this.start();
-//     }
-
-//     // initializeComponents() {
-//     //     // Initialize network instance
-//     //     this.network = new Network();
-        
-//     //     // Initialize databases
-//     //     this.userDB = new Database('users');
-//     //     this.taskDB = new Database('tasks');
-//     //     this.userDB.init();
-//     //     this.taskDB.init();
-
-//     //     // Initialize servers
-//     //     this.authServer = new Server(this.userDB);
-//     //     this.taskServer = new Server(this.taskDB);
-
-//     //     // Initialize client
-//     //     this.client = new Client();
-//     // }
-
-//     start() {
-//         // Register global error handler
-//         window.onerror = this.handleError.bind(this);
-
-//         // Initialize loading indicator
-//         this.setupLoadingIndicator();
-
-//         // Setup global event listeners
-//         this.setupGlobalEventListeners();
-
-//         // Handle initial route
-//         this.handleInitialRoute();
-//     }
-
-//     setupLoadingIndicator() {
-//         const loadingSpinner = document.getElementById('loading-spinner');
-        
-//         // Show/hide loading spinner
-//         this.showLoading = () => {
-//             loadingSpinner.classList.remove('hidden');
-//             this.state.isLoading = true;
-//         };
-
-//         this.hideLoading = () => {
-//             loadingSpinner.classList.add('hidden');
-//             this.state.isLoading = false;
-//         };
-//     }
-
-//     setupGlobalEventListeners() {
-//         // Listen for all FAJAX requests
-//         document.addEventListener('fajax-request-start', () => this.showLoading());
-//         document.addEventListener('fajax-request-end', () => this.hideLoading());
-
-//         // Listen for authentication events
-//         document.addEventListener('auth-status-changed', (event) => {
-//             this.handleAuthStatusChange(event.detail);
-//         });
-
-//         // Listen for task updates
-//         document.addEventListener('task-updated', () => {
-//             this.client.loadTasks();
-//         });
-
-//         // Listen for filter changes
-//         const searchInput = document.getElementById('search-tasks');
-//         if (searchInput) {
-//             searchInput.addEventListener('input', (e) => {
-//                 this.state.filters.search = e.target.value;
-//                 this.applyFilters();
-//             });
-//         }
-
-//         const priorityFilter = document.getElementById('filter-priority');
-//         if (priorityFilter) {
-//             priorityFilter.addEventListener('change', (e) => {
-//                 this.state.filters.priority = e.target.value;
-//                 this.applyFilters();
-//             });
-//         }
-//     }
-
-//     handleInitialRoute() {
-//         const currentHash = window.location.hash || AppConfig.defaultRoute;
-//         const routeConfig = RouteHandlers[currentHash];
-
-//         if (!routeConfig) {
-//             window.location.hash = AppConfig.defaultRoute;
-//             return;
-//         }
-
-//         if (routeConfig.requiresAuth && !this.state.currentUser) {
-//             window.location.hash = '#login';
-//             return;
-//         }
-
-//         this.client.handleNavigation();
-//     }
-
-//     applyFilters() {
-//         const filteredTasks = this.state.tasks.filter(task => {
-//             // Apply search filter
-//             const matchesSearch = task.title.toLowerCase().includes(this.state.filters.search.toLowerCase()) ||
-//                                 task.description.toLowerCase().includes(this.state.filters.search.toLowerCase());
-
-//             // Apply priority filter
-//             const matchesPriority = this.state.filters.priority === 'all' || 
-//                                   task.priority === this.state.filters.priority;
-
-//             return matchesSearch && matchesPriority;
-//         });
-
-//         this.client.renderTasks(filteredTasks);
-//     }
-
-//     handleAuthStatusChange(user) {
-//         this.state.currentUser = user;
-        
-//         // Update UI elements
-//         const userNameElement = document.getElementById('user-name');
-//         if (userNameElement) {
-//             userNameElement.textContent = user ? `שלום, ${user.name}` : '';
-//         }
-
-//         // Handle routing
-//         if (!user && window.location.hash === '#app') {
-//             window.location.hash = '#login';
-//         }
-//     }
-
-//     handleError(message, source, lineno, colno, error) {
-//         console.error('Application Error:', error);
-        
-//         // Show user-friendly error message
-//         this.client.showNotification('אירעה שגיאה במערכת', 'error');
-        
-//         // Hide loading indicator if error occurred during loading
-//         if (this.state.isLoading) {
-//             this.hideLoading();
-//         }
-
-//         return true; // Prevent default error handling
-//     }
-// }
-
-// // Initialize the application when the DOM is ready
-// document.addEventListener('DOMContentLoaded', () => {
-//     window.app = new TaskMasterApp();
-// });
-
-
-// ///////////////
-// document.addEventListener("DOMContentLoaded", function () {
-//     const root = document.getElementById("root");
-
-//     function loadPage(templateId) {
-//         const template = document.getElementById(templateId);
-//         if (template) {
-//             root.innerHTML = ""; // מנקה את התוכן הקיים
-//             const clone = document.importNode(template.content, true);
-//             root.appendChild(clone);
-//         }
-//     }
-
-//     // התחלה עם עמוד ההתחברות
-//     loadPage("login-template");
-
-//     // מעבר להרשמה בלחיצה
-//     document.addEventListener("click", function (event) {
-//         if (event.target.id === "to-register") {
-//             event.preventDefault();
-//             loadPage("register-template");
-//         } else if (event.target.id === "to-login") {
-//             event.preventDefault();
-//             loadPage("login-template");
-//         }
-//     });
-// });
-///////////////
 document.addEventListener("DOMContentLoaded", () => {
     const root = document.getElementById("root");
     const loginTemplate = document.getElementById("login-template").content;
@@ -308,6 +81,270 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    function initTaskManager() {
+        // Select DOM elements
+        const taskPrioritySelect = document.getElementById('task-priority');
+        const priorityBadge = document.querySelector('.priority-badge');
+        const createTaskBtn = document.querySelector('.create-task');
+        const deleteTaskBtn = document.querySelector('.delete-task');
+        const taskList = document.querySelector('.task-list');
+        const taskTitleInput = document.querySelector('.task-title');
+        const taskDescInput = document.querySelector('.task-description');
+        const taskCategorySelect = document.getElementById('task-category');
+        const taskCompleteCheckbox = document.getElementById('task-complete');
+        
+        // Load tasks from localStorage
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        
+        // Update priority badge based on selected priority
+        taskPrioritySelect.addEventListener('change', function() {
+            priorityBadge.className = 'priority-badge ' + this.value;
+            
+            // Update text content based on priority
+            if (this.value === 'high') {
+                priorityBadge.textContent = 'דחופה';
+            } else if (this.value === 'medium') {
+                priorityBadge.textContent = 'בינונית';
+            } else {
+                priorityBadge.textContent = 'נמוכה';
+            }
+        });
+        
+        // Create a new task
+        createTaskBtn.addEventListener('click', function() {
+            // Validate task title
+            if (!taskTitleInput.value.trim()) {
+                alert('נא להזין שם משימה');
+                return;
+            }
+            // Check if we're in edit mode
+            if (createTaskBtn.dataset.editing) {
+                updateTask();
+                return;
+            }
+            
+            // Create new task object
+            const newTask = {
+                id: Date.now(),
+                title: taskTitleInput.value,
+                description: taskDescInput.value,
+                priority: taskPrioritySelect.value,
+                category: taskCategorySelect.value,
+                completed: taskCompleteCheckbox.checked,
+                createdAt: new Date().toISOString()
+            };
+            
+            // Add to tasks array
+            tasks.push(newTask);
+            
+            // Save to localStorage
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            
+            // Render the task
+            renderTask(newTask);
+            
+            // Clear form
+            resetForm();
+
+            // taskTitleInput.value = '';
+            // taskDescInput.value = '';
+            // taskPrioritySelect.value = 'high';
+            // taskCategorySelect.value = 'home';
+            // taskCompleteCheckbox.checked = false;
+            
+            // // Update priority badge
+            // priorityBadge.className = 'priority-badge high';
+            // priorityBadge.textContent = 'דחופה';
+        });
+        
+    // Delete task button event listener
+    deleteTaskBtn.addEventListener('click', function() {
+        if (!createTaskBtn.dataset.editing) return;
+        
+        const taskId = parseInt(createTaskBtn.dataset.editing);
+        
+        // Confirm deletion
+        if (confirm('האם אתה בטוח שברצונך למחוק את המשימה?')) {
+            // Remove task from array
+            tasks = tasks.filter(task => task.id !== taskId);
+            
+            // Save to localStorage
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            
+            // Reset the form
+            resetForm();
+            
+            // Re-render task list
+            refreshTaskList();
+        }
+    });
+    
+    // Render a single task item
+    function renderTask(task) {
+        const taskElement = document.createElement('div');
+        taskElement.className = 'task-item';
+        if (task.completed) {
+            taskElement.classList.add('completed');
+        }
+        taskElement.dataset.id = task.id;
+        
+        const descriptionPreview = truncateDescription(task.description, 4);
+        const categoryText = getCategoryText(task.category);
+        
+        taskElement.innerHTML = `
+            <div class="task-item-title">${task.title}</div>
+            <div class="task-item-description">${descriptionPreview}</div>
+            <div class="task-item-footer">
+                <div class="priority-badge ${task.priority}">${getPriorityText(task.priority)}</div>
+                <div class="task-item-category">${categoryText}</div>
+            </div>
+        `;
+        
+        // Add click event to open/edit task
+        taskElement.addEventListener('click', function() {
+            openTaskForEditing(task.id);
+        });
+        
+        taskList.appendChild(taskElement);
+    }
+    
+    // Truncate description to specified number of words
+    function truncateDescription(text, wordCount) {
+        if (!text) return '';
+        const words = text.split(' ');
+        if (words.length <= wordCount) return text;
+        return words.slice(0, wordCount).join(' ') + '...';
+    }
+    
+    // Helper function to get priority text in Hebrew
+    function getPriorityText(priority) {
+        switch(priority) {
+            case 'high': return 'דחופה';
+            case 'medium': return 'בינונית';
+            case 'low': return 'נמוכה';
+            default: return '';
+        }
+    }
+    
+    // Helper function to get category text in Hebrew
+    function getCategoryText(category) {
+        switch(category) {
+            case 'home': return 'בית';
+            case 'work': return 'עבודה';
+            case 'studies': return 'לימודים';
+            case 'finances': return 'פיננסים';
+            case 'other': return 'אחר';
+            default: return '';
+        }
+    }
+    
+    // Open task for editing
+    function openTaskForEditing(taskId) {
+        const task = tasks.find(t => t.id === taskId);
+        if (!task) return;
+        
+        // Fill form with task data
+        taskTitleInput.value = task.title;
+        taskDescInput.value = task.description;
+        taskPrioritySelect.value = task.priority;
+        taskCategorySelect.value = task.category;
+        taskCompleteCheckbox.checked = task.completed;
+        
+        // Update priority badge
+        priorityBadge.className = 'priority-badge ' + task.priority;
+        priorityBadge.textContent = getPriorityText(task.priority);
+        
+        // Change create button to update
+        createTaskBtn.textContent = 'עדכן משימה';
+        createTaskBtn.dataset.editing = taskId;
+        
+        // Show delete button
+        deleteTaskBtn.classList.remove('hidden');
+        
+        // Scroll to form
+        document.querySelector('.task-container').scrollIntoView({
+            behavior: 'smooth'
+        });
+    }
+    
+    // Update an existing task
+    function updateTask() {
+        // Validate task title
+        if (!taskTitleInput.value.trim()) {
+            alert('נא להזין שם משימה');
+            return;
+        }
+        
+        const taskId = parseInt(createTaskBtn.dataset.editing);
+        const taskIndex = tasks.findIndex(t => t.id === taskId);
+        
+        if (taskIndex === -1) return;
+        
+        // Update task object
+        tasks[taskIndex] = {
+            ...tasks[taskIndex],
+            title: taskTitleInput.value,
+            description: taskDescInput.value,
+            priority: taskPrioritySelect.value,
+            category: taskCategorySelect.value,
+            completed: taskCompleteCheckbox.checked,
+            updatedAt: new Date().toISOString()
+        };
+        
+        // Save to localStorage
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        
+        // Reset form
+        resetForm();
+        
+        // Refresh task list
+        refreshTaskList();
+    }
+    
+    // Reset form to create mode
+    function resetForm() {
+        taskTitleInput.value = '';
+        taskDescInput.value = '';
+        taskPrioritySelect.value = 'high';
+        taskCategorySelect.value = 'home';
+        taskCompleteCheckbox.checked = false;
+        
+        // Reset priority badge
+        priorityBadge.className = 'priority-badge high';
+        priorityBadge.textContent = 'דחופה';
+        
+        // Reset button
+        createTaskBtn.textContent = 'צור משימה';
+        delete createTaskBtn.dataset.editing;
+        
+        // Hide delete button
+        deleteTaskBtn.classList.add('hidden');
+    }
+    
+    // Refresh the task list
+    function refreshTaskList() {
+        taskList.innerHTML = '';
+        tasks.forEach(renderTask);
+    }
+    
+    // Render existing tasks
+    refreshTaskList();
+}    
+    
+    // Add this line to your renderDashboard function
+    function renderDashboard(username) {
+        renderPage(appTemplate);
+        document.getElementById("user-name").innerText = username;
+        document.getElementById("logout-btn").addEventListener("click", () => {
+            localStorage.removeItem("loggedInUser");
+            renderPage(loginTemplate);
+            handleLogin();
+        });
+        
+        // Initialize task manager
+        initTaskManager();
+    }
+
     document.addEventListener("click", function (event) {
         if (event.target.id === "to-register") {
             event.preventDefault();
@@ -322,13 +359,13 @@ document.addEventListener("DOMContentLoaded", () => {
     
 
     const loggedInUser = localStorage.getItem("loggedInUser");
-    if (loggedInUser) {
-        renderDashboard(loggedInUser);
-    } else {
-        renderPage(loginTemplate);
-        handleLogin();
-    }
-});
+        if (loggedInUser) {
+            renderDashboard(loggedInUser);
+        } else {
+            renderPage(loginTemplate);
+            handleLogin();
+        }
+    });
 
-//main page
+
 
