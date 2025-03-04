@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Database Functions</title>
+</head>
+<body>
+    <h1>Testing TaskDB and UserDB</h1>
+    <script src="taskDB.js"></script>
+    <script src="userDB.js"></script>
+    <script>
+        // הבדיקות הישירות לשתי המחלקות
+        const userDB = new UserDB();
+        const taskDB = new TaskDB();
+
+        // ניקוי ה-Local Storage לפני הבדיקות
+        localStorage.clear();
+
+        // בדיקות למשתמשים
+        console.log("🔍 בדיקות מחלקת UserDB");
+
+        console.log("🟢 הוספת משתמש:");
+        console.log(userDB.addUser("bob", "pass123"));
+
+        console.log("🟠 ניסיון להוסיף משתמש קיים:");
+        console.log(userDB.addUser("bob", "bobi123"));
+
+        console.log("הוספת משתמש נוסף");
+        console.log(userDB.addUser("alic", "password"));
+
+
+        console.log("🟢 שליפת משתמש קיים:");
+       console.log(userDB.searchUser("alic"));
+
+        console.log("🟢 עדכון משתמש:");
+        console.log(userDB.updateUser("alic", { password: "newPassword" }));
+        console.log(userDB.loadUsers());
+
+        console.log("🟢 מחיקת משתמש:");
+        console.log(userDB.deleteUser("alic"));
+        console.log(userDB.loadUsers());
+
+
+        console.log("🟠 מחיקת משתמש שלא קיים:");
+       console.log(userDB.deleteUser("alic"));
+
+       console.log("הוספת משתמש נוסף");
+        console.log(userDB.addUser("alic", "password"));
+
+        console.log("🟢 שליפת כל המשתמשים:");
+        console.log(userDB.getUsers());
+
+        // בדיקות למשימות
+        console.log("\n🔍 בדיקות מחלקת TaskDB");
+
+        console.log("🟢 הוספת משימה:");
+        const newTask = taskDB.addTask("Finish homework", "Math and Science", "alice");
+        console.log(newTask);
+    
+        
+        console.log("🟢 הוספת משימה:");
+        const newTask2 = taskDB.addTask("house work", "dishes ", "bob");
+        console.log(taskDB.loadTasks());
+
+        console.log("🟢 הוספת משימה:");
+        const newTask3 = taskDB.addTask("house work", "loundry ", "alice");
+        console.log(taskDB.loadTasks());
+
+        console.log("🟢 שליפת משימה לפי ID:");
+        console.log(taskDB.getTaskById(3));
+
+        console.log("🟢 שליפת משימות של alice:");
+        console.log(taskDB.getTasksByUser("alice"));
+
+        console.log("🟢 עדכון משימה:");
+        console.log(taskDB.updateTask(newTask.id, { status: true, title: "Homework Done" }));
+        console.log(taskDB.loadTasks());
+
+        console.log("🟢 מחיקת משימה:");
+        console.log(taskDB.deleteTask(newTask.id));
+        console.log(taskDB.loadTasks());
+
+        console.log("🟠 מחיקת משימה שלא קיימת:");
+        console.log(taskDB.deleteTask(9999));
+
+        console.log("🟢 שליפת כל המשימות:");
+        console.log(taskDB.loadTasks());
+
+        // בדיקת מצב ה-Local Storage
+        console.log("\n🔍 בדיקה סופית של Local Storage:");
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            console.log(`🔑 Key: ${key}`, "🗃️ Value:", JSON.parse(localStorage.getItem(key)));
+        }
+    </script>
+</body>
+</html>

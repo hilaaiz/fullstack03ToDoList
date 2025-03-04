@@ -16,8 +16,12 @@ class UserDB{
 
     // search user in local storage by user name
     searchUser(userName){
-        const users= this.saveUsers();
-        return users.find((user)=>user.userName=== userName);
+        const users= this.loadUsers();
+        const  wantedUser= users.find((user)=>user.userName=== userName);
+        if(wantedUser)
+            return wantedUser;
+        return "ERROR - user not found"
+        
     }
 
     // get all users from local storage
@@ -31,7 +35,7 @@ class UserDB{
         const users = this.loadUsers();
         const existingUser= users.find((user)=>user.userName=== userName);
         if(existingUser!=undefined)
-            return "User already exists"
+            return "ERROR - User already exists"
         const newUser= {userName,password};
         users.push(newUser);
         this.saveUsers(users);
@@ -45,20 +49,20 @@ class UserDB{
         if(user){
             Object.assign(user,data);
             this.saveUsers(users);
-            return true;
+            return user;
         }
-        return false;
+        return "ERROR - user not found";
     }
 
     // delete user from local storage
     deleteUser(userName) {
         const users = this.loadUsers();
         const indexToDel = users.findIndex((user) => user.userName === userName);
-        if (index !== -1) {
-          users.splice(index, 1);
+        if (indexToDel !== -1) {
+          users.splice(indexToDel, 1);
           this.saveUsers(users);
-          return true;
+          return "delete user seccesfully";
         }
-        return false;
+        return "ERROR - user to delete not found";
       }
 }
