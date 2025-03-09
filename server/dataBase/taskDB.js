@@ -38,24 +38,31 @@ getTasksByUser(userName = ""){
 
 
 //add new task to local storage 
-addTask(title, desc, userName){
-    const tasks= this.loadTasks();
-    const newTask={
-        userName,
-        id: this.updateTaskID(),
-        title, 
-        desc, 
-        date: new Date().toISOString(),   
-        status:false
-        };
-    tasks.push(newTask);
-    this.saveTasks(tasks);
-    console.log("add new task seccesfully")
+addTask(title, desc, userName,priority="medium", category="other",status=false){
     if (!title || !desc || !userName) {
         return { error: "Missing required fields for task creation" };
     }
+
+    const tasks= this.loadTasks();
+
+    const newTask={
+        userName,
+            id: this.updateTaskID(),
+            title,
+            desc,
+            priority: ["high", "medium", "low"].includes(priority) ? priority : "medium",
+            category: ["home", "work", "studies", "finances", "other"].includes(category) ? category : "other",
+            status,
+            date: new Date().toISOString()
+    };
+        
+    tasks.push(newTask);
+    this.saveTasks(tasks);
+    console.log("add new task seccesfully")
+
     return newTask;
 }
+
 // update the id for a new task
 updateTaskID(){
     var idCounter= localStorage.getItem("idCounter");
@@ -72,18 +79,26 @@ updateTaskID(){
 }
 
 //update task in local storage
-updateTask(taskId, data){
 
-    const tasks= this.loadTasks();
-    const task = tasks.find((task)=>task.id=== taskId);
-    if(task){
-        Object.assign(task,data);
+
+updateTask(taskId, data) {
+    const tasks = this.loadTasks();
+    const task = tasks.find((task) => task.id === taskId);
+    
+    if (task) {
+        Object.assign(task, {
+                ...data,
+                priority: ["high", "medium", "low"].includes(data.priority) ? data.priority : task.priority,
+                category: ["home", "work", "studies", "finances", "other"].includes(data.category) ? data.category : task.category
+            });
         this.saveTasks(tasks);
-        console.log("updated task seccesfully")
+        console.log("updated task successfully");
         return task;
-    }
-    return {error: "ERROR - task not found"}
+        }
+    return { error: "ERROR - task not found" };
 }
+    
+
 
 // delete task from local storage
 deleteTask(taskId){

@@ -37,7 +37,7 @@ class Server {
 
             case "POST":
                 // add new user
-                const addResult = this.dbUsers.addUser(data.userName, data.password);
+                const addResult = this.dbUsers.addUser(data.userName, data.email, data.password);
                 //callback({ status: addResult.startsWith("ERROR") ? 400 : 201, data: addResult });
                 if (addResult && addResult.error) {
                     callback({ status: 400, data: addResult.error });
@@ -80,7 +80,7 @@ class Server {
 
             case "POST":
                 // add new task
-                const newTask = this.dbTasks.addTask(data.title, data.desc, data.userName);
+                const newTask = this.dbTasks.addTask(data.title, data.desc,data.userName,data.priority, data.category,data.status);
                 callback({ status: newTask.error ? 400 : 201, data: newTask });
                 break;
 

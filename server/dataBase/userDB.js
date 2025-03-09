@@ -31,12 +31,12 @@ class UserDB{
     }
 
     // add new user to local storage
-    addUser(userName, password){
+    addUser(userName,email, password){
         const users = this.loadUsers();
         const existingUser= users.find((user)=>user.userName=== userName);
         if(existingUser!=undefined)
             return {error:"ERROR - User already exists"}
-        const newUser= {userName,password};
+        const newUser= {userName,email,password};
         users.push(newUser);
         this.saveUsers(users);
         return newUser;

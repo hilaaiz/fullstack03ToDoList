@@ -89,12 +89,15 @@
                                                 id: 1,
                                                 title: "Update project",
                                                 desc: "Updated the app",
+                                                priority: "high",
+                                                category: "work",
                                                 status: true
                                             }));
                                         }
                                     });
                                     updateUserRequest.send(JSON.stringify({
                                         userName: "charlie",
+                                        email: "charlie@updated.com",
                                         password: "newpassword"
                                     }));
                                 }
@@ -105,13 +108,17 @@
                     addTaskRequest.send(JSON.stringify({
                         title: "Complete project",
                         desc: "Finalize the app",
-                        userName: "charlie"
+                        userName: "charlie",
+                        priority: "medium",
+                        category: "studies",
+                        status: false
                     }));
                 }
             });
 
             addUserRequest.send(JSON.stringify({
                 userName: "charlie",
+                email: "charlie@example.com",
                 password: "mypassword"
             }));
         }

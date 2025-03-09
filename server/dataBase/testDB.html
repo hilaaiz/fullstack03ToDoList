@@ -5,10 +5,10 @@
 </head>
 <body>
     <h1>Testing TaskDB and UserDB</h1>
-    <script src="taskDB.js"></script>
     <script src="userDB.js"></script>
+    <script src="taskDB.js"></script>
     <script>
-        // הבדיקות הישירות לשתי המחלקות
+        // יצירת מופעים של מחלקות ה-DB
         const userDB = new UserDB();
         const taskDB = new TaskDB();
 
@@ -18,33 +18,27 @@
         // בדיקות למשתמשים
         console.log("🔍 בדיקות מחלקת UserDB");
 
-        console.log("🟢 הוספת משתמש:");
-        console.log(userDB.addUser("bob", "pass123"));
+        console.log("🟢 הוספת משתמשים:");
+        console.log(userDB.addUser("bob", "miri2451@@@", "pass123"));
+        console.log(userDB.addUser("alice", "alice@@@", "password"));
+        console.log(userDB.addUser("charlie", "charlie@@@", "charlie123"));
 
         console.log("🟠 ניסיון להוסיף משתמש קיים:");
-        console.log(userDB.addUser("bob", "bobi123"));
-
-        console.log("הוספת משתמש נוסף");
-        console.log(userDB.addUser("alic", "password"));
-
+        console.log(userDB.addUser("bob", "hila@@@", "bobi123"));
 
         console.log("🟢 שליפת משתמש קיים:");
-       console.log(userDB.searchUser("alic"));
+        console.log(userDB.searchUser("alice"));
 
         console.log("🟢 עדכון משתמש:");
-        console.log(userDB.updateUser("alic", { password: "newPassword" }));
+        console.log(userDB.updateUser("alice", { password: "newPassword" }));
         console.log(userDB.loadUsers());
 
         console.log("🟢 מחיקת משתמש:");
-        console.log(userDB.deleteUser("alic"));
+        console.log(userDB.deleteUser("alice"));
         console.log(userDB.loadUsers());
 
-
         console.log("🟠 מחיקת משתמש שלא קיים:");
-       console.log(userDB.deleteUser("alic"));
-
-       console.log("הוספת משתמש נוסף");
-        console.log(userDB.addUser("alic", "password"));
+        console.log(userDB.deleteUser("alice"));
 
         console.log("🟢 שליפת כל המשתמשים:");
         console.log(userDB.getUsers());
@@ -52,31 +46,29 @@
         // בדיקות למשימות
         console.log("\n🔍 בדיקות מחלקת TaskDB");
 
-        console.log("🟢 הוספת משימה:");
-        const newTask = taskDB.addTask("Finish homework", "Math and Science", "alice");
-        console.log(newTask);
-    
-        
-        console.log("🟢 הוספת משימה:");
-        const newTask2 = taskDB.addTask("house work", "dishes ", "bob");
-        console.log(taskDB.loadTasks());
-
-        console.log("🟢 הוספת משימה:");
-        const newTask3 = taskDB.addTask("house work", "loundry ", "alice");
-        console.log(taskDB.loadTasks());
+        console.log("🟢 הוספת משימות:");
+        console.log(taskDB.addTask("Finish homework", "Math and Science", "bob", "high", "studies", false));
+        console.log(taskDB.addTask("Clean house", "Living room and kitchen", "charlie", "medium", "home", false));
+        console.log(taskDB.addTask("Pay bills", "Electricity and water", "bob", "low", "finances", false));
 
         console.log("🟢 שליפת משימה לפי ID:");
-        console.log(taskDB.getTaskById(3));
+        console.log(taskDB.getTaskById(2));
 
-        console.log("🟢 שליפת משימות של alice:");
-        console.log(taskDB.getTasksByUser("alice"));
+        console.log("🟢 שליפת משימות של bob:");
+        console.log(taskDB.getTasksByUser("bob"));
 
-        console.log("🟢 עדכון משימה:");
-        console.log(taskDB.updateTask(newTask.id, { status: true, title: "Homework Done" }));
+        console.log("🟢 עדכון משימה קיימת:");
+        console.log(taskDB.updateTask(1, {
+            title: "Complete homework",
+            desc: "All subjects",
+            priority: "low",
+            category: "studies",
+            status: true
+        }));
         console.log(taskDB.loadTasks());
 
         console.log("🟢 מחיקת משימה:");
-        console.log(taskDB.deleteTask(newTask.id));
+        console.log(taskDB.deleteTask(2));
         console.log(taskDB.loadTasks());
 
         console.log("🟠 מחיקת משימה שלא קיימת:");
