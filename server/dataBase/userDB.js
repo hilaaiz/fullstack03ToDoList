@@ -35,7 +35,7 @@ class UserDB{
         const users = this.loadUsers();
         const existingUser= users.find((user)=>user.userName=== userName);
         if(existingUser!=undefined)
-            return "ERROR - User already exists"
+            return {error:"ERROR - User already exists"}
         const newUser= {userName,password};
         users.push(newUser);
         this.saveUsers(users);
@@ -45,13 +45,13 @@ class UserDB{
     //update user in local storage
     updateUser(userName, data){
         const users= this.loadUsers();
-        const user = users.find((user)=>user.userName=== userName);
+        const user = users.find((user)=>user.userName === userName);
         if(user){
             Object.assign(user,data);
             this.saveUsers(users);
             return user;
         }
-        return "ERROR - user not found";
+        return {error: "ERROR - user not found to update"}
     }
 
     // delete user from local storage
@@ -63,6 +63,6 @@ class UserDB{
           this.saveUsers(users);
           return "delete user seccesfully";
         }
-        return "ERROR - user to delete not found";
+        return {error:"ERROR - user to delete not found"};
       }
 }

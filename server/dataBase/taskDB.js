@@ -51,6 +51,9 @@ addTask(title, desc, userName){
     tasks.push(newTask);
     this.saveTasks(tasks);
     console.log("add new task seccesfully")
+    if (!title || !desc || !userName) {
+        return { error: "Missing required fields for task creation" };
+    }
     return newTask;
 }
 // update the id for a new task
@@ -79,7 +82,7 @@ updateTask(taskId, data){
         console.log("updated task seccesfully")
         return task;
     }
-    return "task not found";
+    return {error: "ERROR - task not found"}
 }
 
 // delete task from local storage
@@ -91,7 +94,7 @@ deleteTask(taskId){
        this.saveTasks(tasks); 
        return "delete task ";
     }
-    return "ERROR- task to delete not found";
+    return {error:"ERROR- task to delete not found"};
 
 }
 }
