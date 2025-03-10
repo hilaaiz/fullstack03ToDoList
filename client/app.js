@@ -59,48 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return users[username] || null;
     }
 
-    // function handleLogin() {
-    //     const loginForm = document.getElementById("login-form");
-    //     loginForm.addEventListener("submit", (e) => {
-    //         e.preventDefault();
-    //         const username = document.getElementById("login-user-name").value;
-    //         const password = document.getElementById("login-password").value;
-
-    //         const loginRequest = new FXMLHttpRequest();
-    //         loginRequest.open("POST","/login");
-    //         loginRequest.setCallback(() => {
-    //             if (loginRequest.readyState === 4) {
-    //                 const response = JSON.parse(loginRequest.response);
-    //                 console.log("תגובה מהשרת בלוגין:", response);
-    
-    //                 // טיפול בשגיאה כאשר השרת מחזיר סטטוס 400
-    //                 if (loginRequest.status === 400) {
-
-    //                     showError("שגיאה בהתחברות: שם משתמש או סיסמה לא נכונים");
-    //                     return;
-    //                 }
-    
-    //                 // טיפול במצב הצלחה כאשר השרת מחזיר סטטוס 200
-    //                 if (loginRequest.status === 200) {
-    //                     showSuccess(`ברוך הבא, ${username}!`);
-    //                     localStorage.setItem("loggedInUser", username);
-    //                     renderDashboard(username);
-    //                 }
-    //             }
-    //         // const user = getUserFromLocalStorage(username);
-    //         // if (!user) {
-    //         //     alert("שם המשתמש לא קיים");
-    //         //     return;
-    //         // }
-    //         // if (user.password !== password) {
-    //         //     alert("הסיסמה שגויה");
-    //         //     return;
-    //         // }
-    //         // localStorage.setItem("loggedInUser", username);
-    //         // renderDashboard(username);
-            
-    //     });
-    // }
 
     function handleLogin() {
         const loginForm = document.getElementById("login-form");
@@ -172,7 +130,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const taskCompleteCheckbox = document.getElementById('task-complete');
         
         // Load tasks from localStorage
+        const loggedInUser = localStorage.getItem("loggedInUser");
         let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        tasks = tasks.filter(task => task.userName === loggedInUser);
         
         // Update priority badge based on selected priority
         taskPrioritySelect.addEventListener('change', function() {
@@ -200,10 +160,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 updateTask();
                 return;
             }
+
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            if (!loggedInUser) {
+            alert("עליך להתחבר קודם");
+            return;
+            }
             
             // Create new task object
             const newTask = {
                 id: Date.now(),
+                userName: loggedInUser,
                 title: taskTitleInput.value,
                 description: taskDescInput.value,
                 priority: taskPrioritySelect.value,
@@ -223,16 +190,6 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // Clear form
             resetForm();
-
-            // taskTitleInput.value = '';
-            // taskDescInput.value = '';
-            // taskPrioritySelect.value = 'high';
-            // taskCategorySelect.value = 'home';
-            // taskCompleteCheckbox.checked = false;
-            
-            // // Update priority badge
-            // priorityBadge.className = 'priority-badge high';
-            // priorityBadge.textContent = 'דחופה';
         });
         
     // Delete task button event listener
