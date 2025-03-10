@@ -31,7 +31,7 @@ class Network {
     // change loss rate func
     setPacketLossRate(rate) {
         if (rate < 0.1) rate = 0.1;
-        if (rate > 0.5) rate = 0.5;
+        if (rate > 0.3) rate = 0.3;
         this.packetLossRate = rate;
         console.log("Packet loss rate set to ${(rate * 100).toFixed(0)}%");
     }
