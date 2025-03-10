@@ -11,42 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
         root.appendChild(template.cloneNode(true));
     }
 
-    function saveUserToLocalStorage(user) {
-        let users = JSON.parse(localStorage.getItem("users")) || {};
-        if (users[user.username]) {
-            return false;
-        }
-        users[user.username] = user;
-        localStorage.setItem("users", JSON.stringify(users));
-        return true;
-    }
-
-    function getUserFromLocalStorage(username) {
-        let users = JSON.parse(localStorage.getItem("users")) || {};
-        return users[username] || null;
-    }
-
-    function handleLogin() {
-        const loginForm = document.getElementById("login-form");
-        loginForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            const username = document.getElementById("login-user-name").value;
-            const password = document.getElementById("login-password").value;
-            
-            const user = getUserFromLocalStorage(username);
-            if (!user) {
-                alert("שם המשתמש לא קיים");
-                return;
-            }
-            if (user.password !== password) {
-                alert("הסיסמה שגויה");
-                return;
-            }
-            localStorage.setItem("loggedInUser", username);
-            renderDashboard(username);
-        });
-    }
-
     function handleRegister() {
         const registerForm = document.getElementById("register-form");
         registerForm.addEventListener("submit", (e) => {
@@ -54,22 +18,136 @@ document.addEventListener("DOMContentLoaded", () => {
             const username = document.getElementById("register-name").value;
             const email = document.getElementById("register-email").value;
             const password = document.getElementById("register-password").value;
-            
+    
             if (password.length < 6) {
                 alert("הסיסמה חייבת להכיל לפחות 6 תווים");
                 return;
             }
+    
+            // יצירת אובייקט FAJAX לשליחת בקשה לשרת
+            const addUserRequest = new FXMLHttpRequest();
+            addUserRequest.open("POST", "/users");
+            addUserRequest.setCallback(() => {
+                if (addUserRequest.readyState === 4) {
+                    const response = JSON.parse(addUserRequest.response);
+                    console.log("תגובה מהשרת בהרשמה:", response);
+    
+                    if (addUserRequest.status === 400) {
+                        alert("שגיאה בהרשמה: שם המשתמש כבר קיים, בחר שם אחר");
+                        return;
+                    }
+    
+                    if (addUserRequest.status === 201) {
+                        alert("ההרשמה בוצעה בהצלחה! כעת ניתן להתחבר.");
+                        renderPage(loginTemplate);
+                        handleLogin();
+                    }
+                }
+            });
+    
+            // שליחת הבקשה לשרת
+            addUserRequest.send(JSON.stringify({
+                userName: username,
+                email: email,
+                password: password
+            }));
+        });
+    } 
+
+    function getUserFromLocalStorage(username) {
+        let users = JSON.parse(localStorage.getItem("users")) || {};
+        return users[username] || null;
+    }
+
+    // function handleLogin() {
+    //     const loginForm = document.getElementById("login-form");
+    //     loginForm.addEventListener("submit", (e) => {
+    //         e.preventDefault();
+    //         const username = document.getElementById("login-user-name").value;
+    //         const password = document.getElementById("login-password").value;
+
+    //         const loginRequest = new FXMLHttpRequest();
+    //         loginRequest.open("POST","/login");
+    //         loginRequest.setCallback(() => {
+    //             if (loginRequest.readyState === 4) {
+    //                 const response = JSON.parse(loginRequest.response);
+    //                 console.log("תגובה מהשרת בלוגין:", response);
+    
+    //                 // טיפול בשגיאה כאשר השרת מחזיר סטטוס 400
+    //                 if (loginRequest.status === 400) {
+
+    //                     showError("שגיאה בהתחברות: שם משתמש או סיסמה לא נכונים");
+    //                     return;
+    //                 }
+    
+    //                 // טיפול במצב הצלחה כאשר השרת מחזיר סטטוס 200
+    //                 if (loginRequest.status === 200) {
+    //                     showSuccess(`ברוך הבא, ${username}!`);
+    //                     localStorage.setItem("loggedInUser", username);
+    //                     renderDashboard(username);
+    //                 }
+    //             }
+    //         // const user = getUserFromLocalStorage(username);
+    //         // if (!user) {
+    //         //     alert("שם המשתמש לא קיים");
+    //         //     return;
+    //         // }
+    //         // if (user.password !== password) {
+    //         //     alert("הסיסמה שגויה");
+    //         //     return;
+    //         // }
+    //         // localStorage.setItem("loggedInUser", username);
+    //         // renderDashboard(username);
             
-            const newUser = { username, email, password };
-            if (!saveUserToLocalStorage(newUser)) {
-                alert("שם המשתמש כבר תפוס, בחר שם אחר");
-                return;
-            }
-            alert("ההרשמה בוצעה בהצלחה! כעת ניתן להתחבר.");
-            renderPage(loginTemplate);
-            handleLogin();
+    //     });
+    // }
+
+    function handleLogin() {
+        const loginForm = document.getElementById("login-form");
+        loginForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+    
+            const username = document.getElementById("login-user-name").value;
+            const password = document.getElementById("login-password").value;
+    
+            // יצירת בקשת GET לשרת כדי לקבל את פרטי המשתמש
+            const getUserRequest = new FXMLHttpRequest();
+            getUserRequest.open("GET", "/users");
+            getUserRequest.setCallback(() => {
+                if (getUserRequest.readyState === 4) {
+                    const response = JSON.parse(getUserRequest.response);
+                    console.log("תגובה מהשרת בלוגין:", response);
+    
+                    // בדיקה אם המשתמש קיים במערכת
+                    if (getUserRequest.status === 200 && Array.isArray(response)) {
+                        const user = response.find(u => u.userName === username);
+    
+                        if (!user) {
+                            alert("שם המשתמש לא קיים.");
+                            return;
+                        }
+    
+                        // בדיקת הסיסמה
+                        if (user.password !== password) {
+                            alert("הסיסמה שגויה.");
+                            return;
+                        }
+    
+                        // התחברות מוצלחת
+                        alert(`ברוך הבא, ${username}!`);
+                        localStorage.setItem("loggedInUser", username);
+                        renderDashboard(username);
+                    } else {
+                        alert("שגיאה בטעינת פרטי המשתמש.");
+                    }
+                }
+            });
+    
+            // שליחת הבקשה לשרת לקבלת כל המשתמשים
+            getUserRequest.send();
         });
     }
+
 
     function renderDashboard(username) {
         renderPage(appTemplate);
