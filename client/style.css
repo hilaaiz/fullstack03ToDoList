@@ -44,47 +44,42 @@ body {
     padding: 20px;
 }
 
-/* Auth Styles */
-.auth-container {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
 .auth-box {
     background: white;
     padding: 40px;
-    border-radius: 10px;
+    border-radius: 15px;
     box-shadow: var(--box-shadow);
     width: 100%;
     max-width: 400px;
     max-height: 900px;
+    border-top: 5px solid var(--primary-color);
 }
 
 .auth-box h1 {
-    color: var(--text-color);
-    margin-bottom: 100px;
+    color: var(--primary-color);
+    margin-bottom: 30px;
     text-align: center;
+    font-size: 2rem;
 }
 
 .auth-form .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .auth-form label {
     display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: var(--text-color);
 }
 
 .auth-form input {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     border: 1px solid var(--border-color);
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 16px;
+    transition: border 0.3s;
 }
 
 .app-header {
@@ -113,6 +108,7 @@ body {
 }
 
 .tasks-container {
+    max-width: 100%;
     display: grid;
     grid-template-columns: 300px 1fr;
     gap: 30px;
@@ -125,6 +121,7 @@ body {
     border-radius: 10px;
     box-shadow: var(--box-shadow);
     height: fit-content;
+    overflow: hidden;
 }
 
 .btn-primary {
@@ -162,12 +159,6 @@ body {
 
 .hidden {
     display: none;
-}
-
-@media (max-width: 768px) {
-    .tasks-container {
-        grid-template-columns: 1fr;
-    }
 }
 
 .task-container {
@@ -434,48 +425,7 @@ body {
     font-size: 0.9rem;
 }
 
-.auth-box {
-    background: white;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 420px;
-    max-height: 900px;
-    border-top: 5px solid var(--primary-color);
-}
 
-.auth-box h1 {
-    color: var(--primary-color);
-    margin-bottom: 30px;
-    text-align: center;
-    font-size: 2rem;
-}
-
-.auth-logo {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.auth-form .form-group {
-    margin-bottom: 25px;
-}
-
-.auth-form label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: 600;
-    color: var(--text-color);
-}
-
-.auth-form input {
-    width: 100%;
-    padding: 14px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 16px;
-    transition: border 0.3s;
-}
 
 .auth-form input:focus {
     border-color: var(--primary-color);
@@ -493,34 +443,10 @@ body {
     text-decoration: none;
 }
 
-/* Main App Styles */
-.app-header {
-    background: white;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    padding: 0;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 100;
-}
-
-.header-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 
 
 
-.tasks-container {
-    max-width: 100%;
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 30px;
-}
+
 
 .section-header {
     padding: 20px;
@@ -530,20 +456,6 @@ body {
     margin-bottom: 0;
 }
 
-.add-task-section {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    height: fit-content;
-    overflow: hidden;
-}
-
-.tasks-list-section {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
-}
 
 .section-content {
     padding: 20px;
