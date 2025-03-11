@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TaskMaster - ניהול משימות</title>
     <link rel="stylesheet" href="client/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <body>
@@ -62,20 +63,29 @@
     <template id="app-template">
         <div class="app-container">
             <header class="app-header">
-                <div class="header-content">
-                    <h1>TaskMaster</h1>
-                    <div class="user-info">
-                        <span id="user-name"></span>
-                        <button id="logout-btn" class="btn-secondary">התנתקות</button>
+                <div class="navbar">
+                    <div class="navbar-container">
+                      <div class="navbar-logo">
+                        <img src="../media/logo.png" alt="Task Manager Logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' width=\'40\' height=\'40\'><rect fill=\'%23b34545\' width=\'24\' height=\'24\' rx=\'4\'/><path d=\'M7 12 L10 15 L17 8\' stroke=\'white\' stroke-width=\'2\' fill=\'none\'/></svg>'">
+                        <h1>Task Manager</h1>
+                      </div>
+                      <div class="navbar-user">
+                        <div class="user-info">
+                          <div class="user-avatar" id="user-avatar">T</div>
+                          <span id="user-name">User</span>
+                        </div>
+                        <button id="logout-btn">התנתק</button>
+                      </div>
                     </div>
-                </div>
+                  </div>
+                  
             </header>
             
             <main class="main-content">
                 <!-- Task Creation Component -->
                 <div class="task-container">
                     <div class="task-header">
-                        <input type="text" class="task-title" placeholder="משימה ראשונה להיום" dir="rtl">
+                        <input type="text" class="task-title" placeholder="המשימה שלי" dir="rtl">
                         <div class="task-checkbox">
                             <input type="checkbox" id="task-complete">
                             <label for="task-complete"></label>
@@ -118,9 +128,51 @@
                 <div class="task-list">
                     <!-- Task items will be added here dynamically -->
                 </div>
+
+                
                     
             </main>
         </div>
+        <footer class="footer">
+            <div class="footer-container">
+              <div class="footer-content">
+                <div class="footer-section">
+                  <h3>Task Manager</h3>
+                  <p>A simple and efficient way to organize your tasks and boost your productivity.</p>
+                  <div class="footer-social">
+                    <a href="#" class="social-icon">
+                      <i class="fa fa-facebook"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                      <i class="fa fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                      <i class="fa fa-instagram"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="footer-section">
+                  <h3>Quick Links</h3>
+                  <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                  </ul>
+                </div>
+                <div class="footer-section">
+                  <h3>Support</h3>
+                  <ul class="footer-links">
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="footer-bottom">
+                <p>&copy; 2025 Task Manager. All rights reserved.</p>
+              </div>
+            </div>
+          </footer>
     </template>
 
 
