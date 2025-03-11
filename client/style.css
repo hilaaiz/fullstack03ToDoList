@@ -294,6 +294,14 @@ body {
     border-radius: 5px;
 }
 
+.task-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px 0;
+    direction: rtl;
+}
+
 .task-header-img {
     width: 50px;
     position: absolute;
